@@ -1,10 +1,19 @@
 import React, { useState } from 'react';
 
 const Tour = (tourData) => {
-  const [readButtonText, setReadButtonText] = useState('read more');
   const [tour, setTour] = useState(tourData);
+  const [readButtonText, setReadButtonText] = useState('read more');
+  const [tourInfo, setTourInfo] = useState(tour.info.slice(0, 200) + '...');
 
-  const changeTourInfo = () => {};
+  const changeTourInfo = () => {
+    if (tourInfo.length > 300) {
+      setTourInfo(tour.info.slice(0, 200) + '...');
+      setReadButtonText('read more');
+    } else {
+      setTourInfo(tour.info);
+      setReadButtonText('show less');
+    }
+  };
 
   return (
     <article className='single-tour'>
@@ -15,7 +24,8 @@ const Tour = (tourData) => {
           <h4 className='tour-price'>{tour.price}</h4>
         </div>
         <p>
-          {tour.info} <button onClick={changeTourInfo}>{readButtonText}</button>
+          {tourInfo}
+          <button onClick={changeTourInfo}>{readButtonText}</button>
         </p>
         <button className='delete-btn'>not interested</button>
       </footer>
